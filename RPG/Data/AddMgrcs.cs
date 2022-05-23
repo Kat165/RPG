@@ -115,14 +115,15 @@ namespace RPG.Data
                 conn.Close();
             }
 
-            dataTable.Columns["Id"].ColumnMapping = MappingType.Hidden;
-            dataTable.Columns["UserId"].ColumnMapping = MappingType.Hidden;
+            //dataTable.Columns["Id"].ColumnMapping = MappingType.Hidden;
+            //dataTable.Columns["UserId"].ColumnMapping = MappingType.Hidden;
             dataTable.Rows.Add();
             dataTable.Rows[0]["Id"] = maxId;
             dataTable.Rows[0]["Race"] = selRace;
             dataTable.Rows[0]["UserId"] = RegLogMgr.currentUser.getId();
             view.DataSource = dataTable;
             view.Columns["Id"].Visible = false;
+            view.Columns["UserId"].Visible = false;
         }
 
         public void saveOldNewCreature(DataGridView dataGridView1)
@@ -194,16 +195,24 @@ namespace RPG.Data
             int d = 0;
             foreach (string value in values)
             {
-                //nerf.nerf_this(selClass, dataGridView1.Columns[d].Name, value);
-                MessageBox.Show(dataGridView1.Columns[d].Name);
+                if(d == 0)
+                {
+                    d++;
+                    continue;
+                    if(d == values.Length)
+                    {
+                        d++;
+                        continue;
+                    }
+                }
+                values[d] = nerf.nerf_this(selClass, dataGridView1.Columns[d].Name, value);
                 d++;
             }
 
             conn.Open();
-            var querry = string.Format("INSERT INTO {0} VALUES ( @Id," + stringBuilder + ", @UserId)", selClass);
+            var querry = string.Format("INSERT INTO {0} VALUES (" + stringBuilder + ")", selClass);
             using(var command = new SqlCommand(querry, conn))
             {
-                command.Parameters.AddWithValue("@Id",maxId);
 
                 int l = 0;
                 foreach(string value in values)
@@ -211,8 +220,6 @@ namespace RPG.Data
                     command.Parameters.AddWithValue("@v" + l, value);
                     l++;
                 }
-                command.Parameters.AddWithValue("@UserId", RegLogMgr.currentUser.getId());
-
                 var reader = command.ExecuteReader();
                 
                 

@@ -9,6 +9,10 @@ namespace RPG.Data
 {
     internal class Nerf
     {
+
+        /// <summary>
+        /// Nerfię tylko mane bo nie działa
+        /// </summary>
         SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\kasia\source\repos\RPG\RPG\Database.mdf;Integrated Security=True");
 
         public string nerf_this(string c_class, string something, string value)
@@ -30,7 +34,7 @@ namespace RPG.Data
                 {
                     while (reader.Read())
                     {
-                        res = reader.GetString(0);
+                        res = reader.GetValue(0).ToString();
                     }
                 }
                 reader.Close();

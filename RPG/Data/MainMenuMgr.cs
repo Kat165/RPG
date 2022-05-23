@@ -31,12 +31,8 @@ namespace RPG.Data
                 ES_MainM.Visible = false;
                 ES_MainM.Enabled = false;
 
-                //EU_MainM.Visible = false;
-                //EU_MainM.Enabled=false;
-
-                EU_MainM.Visible = true;
-                EU_MainM.Enabled = true;
-
+                EU_MainM.Visible = false;
+                EU_MainM.Enabled=false;
 
                 MyAcc_btn.Visible = false;
                 MyAcc_btn.Enabled = false;
@@ -75,6 +71,51 @@ namespace RPG.Data
 
                 Login_btn.Visible = true;
                 Login_btn.Enabled = true;
+            }else if(cuurr == 1)
+            {
+                ES_MainM.Visible = true;
+                ES_MainM.Enabled = true;
+
+                EU_MainM.Visible = true;
+                EU_MainM.Enabled = true;
+
+                MyAcc_btn.Visible = true;
+                MyAcc_btn.Enabled = true;
+
+                Add_Crt_btn_MM.Visible = true;
+                Add_Crt_btn_MM.Enabled = true;
+
+                Register_btn.Visible = true;
+                Register_btn.Enabled = true;
+
+                See_Main.Visible = true;
+                See_Main.Enabled = true;
+
+                Login_btn.Visible = true;
+                Login_btn.Enabled = true;
+            }
+            else if (cuurr == 2)
+            {
+                ES_MainM.Visible = true;
+                ES_MainM.Enabled = true;
+
+                EU_MainM.Visible = false;
+                EU_MainM.Enabled = false;
+
+                MyAcc_btn.Visible = true;
+                MyAcc_btn.Enabled = true;
+
+                Add_Crt_btn_MM.Visible = true;
+                Add_Crt_btn_MM.Enabled = true;
+
+                Register_btn.Visible = true;
+                Register_btn.Enabled = true;
+
+                See_Main.Visible = true;
+                See_Main.Enabled = true;
+
+                Login_btn.Visible = true;
+                Login_btn.Enabled = true;
             }
         }
 
@@ -89,7 +130,7 @@ namespace RPG.Data
 
             value = Convert.ToInt32(text);
 
-            var querry = string.Format("SELECT TOP {0} * FROM Creatures ORDER BY Id", value);
+            var querry = string.Format("SELECT TOP {0} * FROM Creatures ORDER BY Mana DESC", value);
             conn.Open();
 
             DataTable dt = new DataTable();

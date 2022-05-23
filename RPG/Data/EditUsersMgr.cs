@@ -31,7 +31,6 @@ namespace RPG.Data
                 var reader = cmd.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    MessageBox.Show("Works");
                     while (reader.Read())
                     {
                         users.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3)));
