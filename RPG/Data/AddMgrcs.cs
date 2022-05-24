@@ -140,6 +140,18 @@ namespace RPG.Data
                 }
             }
 
+            if(!int.TryParse(dataGridView1.Rows[0].Cells["Mana"].Value.ToString(),out int r))
+            {
+                MessageBox.Show("Mana must be an integer!");
+                return;
+            }
+
+            if(int.Parse(dataGridView1.Rows[0].Cells["Mana"].Value.ToString()) < 0)
+            {
+                MessageBox.Show("Mana must be greater or equal 0");
+                return;
+            }
+
             StringBuilder sb = new StringBuilder();
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
@@ -205,11 +217,28 @@ namespace RPG.Data
                         continue;
                     }
                 }
-                values[d] = nerf.nerf_this(selClass, dataGridView1.Columns[d].Name, value);
+                //values[d] = nerf.nerf_this(selClass, dataGridView1.Columns[d].Name, value);
                 d++;
+            }
+            conn.Open();
+            var querrrrr = string.Format("SELECT MAX(Mana) FROM {0}", selClass);
+            int maxmana = -1;
+            using (var cmd = new SqlCommand(querrrrr, conn))
+            {
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        maxmana = int.Parse(reader.GetString(0));
+                    }
+                }
+                reader.Close();
+                conn.Close();
             }
 
             conn.Open();
+            values[values.Length - 1] = RegLogMgr.currentUser.getId().ToString();
             var querry = string.Format("INSERT INTO {0} VALUES (" + stringBuilder + ")", selClass);
             using(var command = new SqlCommand(querry, conn))
             {
@@ -226,8 +255,26 @@ namespace RPG.Data
                 reader.Close();
                 conn.Close();
             }
+
+            int mana = int.Parse(dataGridView1.Rows[0].Cells["Mana"].Value.ToString());
+            conn.Open();
+            if (maxmana < mana && maxmana != -1)
+            {
+                mana = (int)(maxmana * 0.75);
+                var q = string.Format("UPDATE {0} SET Mana = @M WHERE Id = @ID", selClass);
+                using( var cmd = new SqlCommand(q, conn))
+                {
+                    cmd.Parameters.AddWithValue("@M", mana);
+                    cmd.Parameters.AddWithValue("@ID", maxId);
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Mana was too big!");
+                }
+            }
+            conn.Close();
+
             conn.Open();
             var querry2 = string.Format("INSERT INTO Creatures VALUES ( @Id, @Archclass, @Class, @Race, @Name, @UserId, @Mana)", selClass);
+            selRace = dataGridView1.Rows[0].Cells["Race"].Value.ToString();
             using (var command = new SqlCommand(querry2, conn))
             {
                 command.Parameters.AddWithValue("@Id", maxId);
@@ -236,14 +283,11 @@ namespace RPG.Data
                 command.Parameters.AddWithValue("@Race", selRace);
                 command.Parameters.AddWithValue("@Name", dataGridView1.Rows[0].Cells["Name"].Value.ToString());
                 command.Parameters.AddWithValue("@UserId", RegLogMgr.currentUser.getId());
-                command.Parameters.AddWithValue("@Mana", dataGridView1.Rows[0].Cells["Mana"].Value.ToString());
+                command.Parameters.AddWithValue("@Mana", mana);
 
                 var reader = command.ExecuteReader();
 
-                if (reader.HasRows)
-                {
-                    MessageBox.Show("Data uploaded!");
-                }
+                MessageBox.Show("Data uploaded!");
 
                 reader.Close();
                 conn.Close();
@@ -274,6 +318,8 @@ namespace RPG.Data
             List<string> alist = new List<string>();
             List<string> cslist = new List<string>();
             List<string> rlist = new List<string>();
+
+
             conn.Open();
             string arcc = "SELECT Archclass, Class, Race FROM Creatures";
 
@@ -427,13 +473,12 @@ namespace RPG.Data
             using (var command = new SqlCommand(querry, conn))
             {
                 var reader = command.ExecuteReader();
-                MessageBox.Show("success");
                 reader.Close();
                 conn.Close();
             }
             
             conn.Open();
-            var querry2 = string.Format("INSERT INTO Creatures VALUES ( @Id, @Archclass, @Class, @Race, @Name, @UserId)", selClass);
+            var querry2 = string.Format("INSERT INTO Creatures VALUES ( @Id, @Archclass, @Class, @Race, @Name, @UserId, @Mana)", selClass);
             using (var command = new SqlCommand(querry2, conn))
             {
                 command.Parameters.AddWithValue("@Id", maxId);
@@ -442,7 +487,7 @@ namespace RPG.Data
                 command.Parameters.AddWithValue("@Race",race_data);
                 command.Parameters.AddWithValue("@Name", dataGridViev.Rows[0].Cells["Name"].Value.ToString());
                 command.Parameters.AddWithValue("@UserId", RegLogMgr.currentUser.getId());
-
+                command.Parameters.AddWithValue("@Mana", dataGridViev.Rows[0].Cells["Mana"].Value.ToString());
                 var reader = command.ExecuteReader();
 
                 MessageBox.Show("Data uploaded!");

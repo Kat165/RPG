@@ -103,6 +103,7 @@
             this.classcomboBox.Name = "classcomboBox";
             this.classcomboBox.Size = new System.Drawing.Size(126, 33);
             this.classcomboBox.TabIndex = 4;
+            this.classcomboBox.SelectedIndexChanged += new System.EventHandler(this.classcomboBox_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -156,6 +157,7 @@
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 70);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(794, 309);
@@ -170,7 +172,7 @@
             this.Search_btn.Name = "Search_btn";
             this.Search_btn.Size = new System.Drawing.Size(300, 48);
             this.Search_btn.TabIndex = 2;
-            this.Search_btn.Text = "Search";
+            this.Search_btn.Text = "Go Back";
             this.Search_btn.UseVisualStyleBackColor = true;
             this.Search_btn.Click += new System.EventHandler(this.Search_btn_Click);
             // 

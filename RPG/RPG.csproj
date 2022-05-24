@@ -94,6 +94,7 @@
     <Compile Include="Data\Nerf.cs" />
     <Compile Include="Data\RegLogMgr.cs" />
     <Compile Include="Data\Model\User.cs" />
+    <Compile Include="Data\SeeAll.cs" />
     <Compile Include="EditCreatures.cs">
       <SubType>Form</SubType>
     </Compile>
