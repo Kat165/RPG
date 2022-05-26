@@ -85,7 +85,6 @@ namespace RPG
         private void button1_Click(object sender, EventArgs e)
         {
             delete.delSth(archcomboBox, classcomboBox, racecomboBox);
-
             mgr.fillClassComboBox(classcomboBox, archcomboBox, racecomboBox);
         }
 
@@ -109,6 +108,7 @@ namespace RPG
         {
             delete.delCtr(selcid);
             mgr.EditAll(dataGridView1, classcomboBox.SelectedItem.ToString());
+            mgr.fillClassComboBox(classcomboBox, archcomboBox, racecomboBox);
         }
     }
 }

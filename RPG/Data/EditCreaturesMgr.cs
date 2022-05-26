@@ -197,6 +197,9 @@ namespace RPG.Data
 
         public void fillClassComboBox(ComboBox box, ComboBox box1, ComboBox box2)
         {
+            box.Items.Clear();
+            box1.Items.Clear();
+            box2.Items.Clear();
             conn.Open();
             string arcc = "SELECT Class FROM Creatures";
 

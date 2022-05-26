@@ -33,7 +33,6 @@
             this.Cancel_btn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.LogOut_btn = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +45,6 @@
             this.tableLayoutPanel1.Controls.Add(this.Cancel_btn, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.LogOut_btn, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -103,17 +101,6 @@
             this.textBox1.Size = new System.Drawing.Size(254, 30);
             this.textBox1.TabIndex = 1;
             // 
-            // LogOut_btn
-            // 
-            this.LogOut_btn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LogOut_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.LogOut_btn.Location = new System.Drawing.Point(3, 150);
-            this.LogOut_btn.Name = "LogOut_btn";
-            this.LogOut_btn.Size = new System.Drawing.Size(253, 46);
-            this.LogOut_btn.TabIndex = 2;
-            this.LogOut_btn.Text = "Log out";
-            this.LogOut_btn.UseVisualStyleBackColor = true;
-            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -135,6 +122,5 @@
         private System.Windows.Forms.Button Cancel_btn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button LogOut_btn;
     }
 }

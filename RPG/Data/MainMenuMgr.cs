@@ -16,6 +16,8 @@ namespace RPG.Data
         int? cuurr;
 
         SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..")) + "\\Database.mdf" + "; Integrated Security=True");
+        
+
         public MainMenuMgr() { }
 
         public void vidible_btn(Button ES_MainM, Button EU_MainM, Button MyAcc_btn, Button Register_btn, Button See_Main, Button Login_btn, Button Add_Crt_btn_MM)

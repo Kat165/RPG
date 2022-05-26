@@ -103,6 +103,54 @@ namespace RPG.Data
                 return;
             }
 
+
+            List<int> idd = new List<int>();
+            string querryx = "SELECT Id FROM Users WHERE RoleId = @id";
+            conn.Open();
+            using (var command = new SqlCommand(querryx, conn))
+            {
+                command.Parameters.AddWithValue("@id", toDel);
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        idd.Add(reader.GetInt32(0));
+                    }
+                }
+                reader.Close();
+                conn.Close();
+            }
+
+
+            List<int> creatIds = new List<int>();
+            foreach(int id in idd)
+            {
+                string querry2 = "SELECT Id FROM Creatures WHERE UserId = @id";
+                conn.Open();
+                using (var command = new SqlCommand(querry2, conn))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    var reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            creatIds.Add(reader.GetInt32(0));
+                        }
+                    }
+                    reader.Close();
+                    conn.Close();
+                }
+            }
+            
+
+            Delete delete = new Delete();
+            foreach (int id in creatIds)
+            {
+                delete.delCtr(id);
+            }
+
             string querry = "DELETE FROM Users WHERE RoleId = @RId";
             conn.Open();
             using (var cmd = new SqlCommand(querry, conn))
@@ -115,6 +163,9 @@ namespace RPG.Data
                 conn.Close();
             }
             fillData(view);
+
+            
+
         }
 
     }

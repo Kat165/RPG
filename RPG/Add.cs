@@ -28,17 +28,21 @@ namespace RPG
 
         private void addbutton_Click(object sender, EventArgs e)
         {
+            if(classcomboBox.SelectedIndex == -1 && !classcheckBox.Checked)
+            {
+                MessageBox.Show("Pick Class or select checkbox");
+                return;
+            }
             add.saveStuff(archcomboBox.Text, classcomboBox.Text, rowcomboBox.Text);
-            if (archcheckBox.Checked || classcheckBox.Checked)
+            if (classcheckBox.Checked)
             {
                 NewAdd newAdd = new NewAdd();
                 this.Hide();
                 newAdd.ShowDialog();
                 this.Show();
             }
-            else
+            else 
             {
-
                 OldAdd oldAdd = new OldAdd();
                 this.Hide();
                 oldAdd.ShowDialog();
@@ -46,5 +50,15 @@ namespace RPG
             }
         }
 
+        private void archcomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            add.FillClass(archcomboBox, classcomboBox, rowcomboBox);
+        }
+
+        private void classcomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(classcomboBox.SelectedIndex != -1)
+                add.FillRace(classcomboBox,rowcomboBox);
+        }
     }
 }

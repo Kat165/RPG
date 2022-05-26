@@ -30,6 +30,9 @@ namespace RPG.Data
 
         public void fillComboBox(ComboBox archclass, ComboBox class_, ComboBox race)
         {
+            archclass.Items.Clear();
+            class_.Items.Clear();
+            race.Items.Clear();
             conn.Open();
             string arcc = "SELECT Archclass, Class, Race FROM Creatures";
 
@@ -69,6 +72,71 @@ namespace RPG.Data
             foreach (string f in racelist)
             {
                 race.Items.Add(f);
+            }
+        }
+
+        public void FillClass(ComboBox box, ComboBox class_, ComboBox r)
+        {
+            class_.SelectedIndex = -1;
+            class_.Items.Clear();
+
+            r.Items.Clear();
+            r.SelectedIndex = -1;
+
+            string arcc = "SELECT  Class FROM Creatures Where Archclass = @a";
+
+            List<string> arclist = new List<string>();
+            conn.Open();
+            using (var command = new SqlCommand(arcc, conn))
+            {
+                command.Parameters.AddWithValue("@a", box.SelectedItem.ToString());
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        arclist.Add(reader.GetString(0));
+                    }
+                }
+
+                reader.Close();
+                conn.Close();
+            }
+
+            arclist = arclist.Distinct().ToList();
+            foreach (string f in arclist)
+            {
+                class_.Items.Add(f);
+            }
+        }
+
+        public void FillRace(ComboBox box, ComboBox r)
+        {
+            r.Items.Clear();
+            r.SelectedIndex = -1;
+            var arcc = string.Format("SELECT Race FROM {0}", box.SelectedItem.ToString());
+
+            List<string> arclist = new List<string>();
+            conn.Open();
+            using (var command = new SqlCommand(arcc, conn))
+            {
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        arclist.Add(reader.GetString(0));
+                    }
+                }
+
+                reader.Close();
+                conn.Close();
+            }
+
+            arclist = arclist.Distinct().ToList();
+            foreach (string f in arclist)
+            {
+                r.Items.Add(f);
             }
         }
 

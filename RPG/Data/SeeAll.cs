@@ -22,9 +22,7 @@ namespace RPG.Data
             SqlCommand cmd = new SqlCommand(sql, conn);
             conn.Open();
 
-            // create data adapter
             SqlDataAdapter da = new SqlDataAdapter(cmd);
-            // this will query your database and return the result to your datatable
             da.Fill(dt);
             conn.Close();
             da.Dispose();
