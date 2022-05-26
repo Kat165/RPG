@@ -12,8 +12,7 @@ namespace RPG.Data
 {
     internal class AddMgrcs
     {
-        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\kasia\source\repos\RPG\RPG\Database.mdf;Integrated Security=True");
-        Nerf nerf = new Nerf();
+        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..")) + "\\Database.mdf" + "; Integrated Security=True");
 
         public static List<string> arclist = new List<string>();
         public static List<string> clist = new List<string>();
@@ -115,8 +114,6 @@ namespace RPG.Data
                 conn.Close();
             }
 
-            //dataTable.Columns["Id"].ColumnMapping = MappingType.Hidden;
-            //dataTable.Columns["UserId"].ColumnMapping = MappingType.Hidden;
             dataTable.Rows.Add();
             dataTable.Rows[0]["Id"] = maxId;
             dataTable.Rows[0]["Race"] = selRace;
@@ -177,51 +174,8 @@ namespace RPG.Data
             }
             stringBuilder.Length--;
 
-            //int d = 0;
-            //conn.Open();
-            //string query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = @class";
-            //using (var command = new SqlCommand(query, conn))
-            //{
-            //    command.Parameters.AddWithValue("@class", selClass);
-            //    var reader = command.ExecuteReader();
-            //    if (reader.HasRows)
-            //    {
-            //        while (reader.Read())
-            //        {
-            //            nerfList.Add(new List<string> { reader.GetString(0),values[d]});
-            //            d++;
-            //        }
-            //    }
-            //    reader.Close();
-            //    conn.Close();
-            //}
-
-            //foreach (List<string> subList in nerfList)
-            //{
-            //    foreach (string item in subList)
-            //    {
-            //        //nerf.nerf_this(selClass,item)
-            //        MessageBox.Show(item);
-            //    }
-            //}
-            int d = 0;
-            foreach (string value in values)
-            {
-                if(d == 0)
-                {
-                    d++;
-                    continue;
-                    if(d == values.Length)
-                    {
-                        d++;
-                        continue;
-                    }
-                }
-                //values[d] = nerf.nerf_this(selClass, dataGridView1.Columns[d].Name, value);
-                d++;
-            }
             conn.Open();
-            var querrrrr = string.Format("SELECT MAX(Mana) FROM {0}", selClass);
+            var querrrrr = string.Format("SELECT Max(Mana) FROM {0}", selClass);
             int maxmana = -1;
             using (var cmd = new SqlCommand(querrrrr, conn))
             {
@@ -230,7 +184,23 @@ namespace RPG.Data
                 {
                     while (reader.Read())
                     {
-                        maxmana = int.Parse(reader.GetString(0));
+                        maxmana = reader.GetInt32(0);
+                    }
+                }
+                reader.Close();
+                conn.Close();
+            }
+            conn.Open();
+            var querrrr = string.Format("SELECT Archclass FROM Creatures WHERE Class = @c");
+            using (var cmd = new SqlCommand(querrrr, conn))
+            {
+                cmd.Parameters.Add("@c", selClass);
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        selArch= reader.GetString(0);
                     }
                 }
                 reader.Close();
@@ -255,6 +225,7 @@ namespace RPG.Data
                 reader.Close();
                 conn.Close();
             }
+            MessageBox.Show(maxmana.ToString());
 
             int mana = int.Parse(dataGridView1.Rows[0].Cells["Mana"].Value.ToString());
             conn.Open();
@@ -362,17 +333,9 @@ namespace RPG.Data
             string class_data = dataGridViev.Rows[0].Cells["Class"].Value.ToString();
             string archclass_data = dataGridViev.Rows[0].Cells["Archclass"].Value.ToString();
 
-            //foreach (string a in alist)
-            //{
-            //    if (string.Equals(a.ToLower(), archclass_data.ToLower())){
-            //        MessageBox.Show("We already have this archclass, try something else");
-            //        return;
-            //    }
-            //}
-            //
             foreach (string c in cslist)
             {
-                if (string.Equals(c.ToLower(), class_data.ToLower()))
+                if (c == class_data)
                 {
                     MessageBox.Show("We already have this class, try something else");
                     return;
@@ -461,7 +424,14 @@ namespace RPG.Data
 
             foreach (string col in colnamestab2)
             {
-                readycols.Append(col + " NVARCHAR (50) NOT NULL,");
+                if(col == "Mana")
+                {
+                    readycols.Append(col + " INT NOT NULL,");
+                }
+                else
+                {
+                    readycols.Append(col + " NVARCHAR (50) NOT NULL,");
+                }
             }
 
 

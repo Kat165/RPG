@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
+using System.IO;
 
 namespace RPG.Data
 {
     internal class EditUsersMgr
     {
-        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\kasia\source\repos\RPG\RPG\Database.mdf;Integrated Security=True");
+        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..")) + "\\Database.mdf" + "; Integrated Security=True");
         List<User> users = new List<User>();
         EncryptDecrypt decrypt = new EncryptDecrypt();
         public void fillData(DataGridView view)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace RPG
         MainMenuMgr mainMenuMgr;
         public MainMenu()
         {
+
+
             InitializeComponent();
             mainMenuMgr = new MainMenuMgr();
 
@@ -78,7 +81,7 @@ namespace RPG
 
         private void ES_MainM_Click(object sender, EventArgs e)
         {
-            EditCreatures editCreatures = new EditCreatures();
+            EditCreatures editCreatures = new EditCreatures(1);
             this.Hide();
             editCreatures.ShowDialog();
             this.Show();

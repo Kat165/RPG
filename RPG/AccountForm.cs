@@ -16,7 +16,7 @@ namespace RPG
         MyAccountMgr mgr;
         EditCreaturesMgr cmgr;
 
-        public static int selectedId = -1;
+        public static int selectedId = 0;
         public AccountForm()
         {
             InitializeComponent();
@@ -42,7 +42,7 @@ namespace RPG
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if(selectedId == -1)
+            if(selectedId == 0)
             {
                 MessageBox.Show("Select creture to edit!");
                 return;
@@ -62,7 +62,15 @@ namespace RPG
             }
             DataGridViewRow row = this.dataGridView1.Rows[e.RowIndex];
             selectedId = int.Parse(row.Cells["Id"].Value.ToString());
+            MessageBox.Show(selectedId.ToString());
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Delete delete = new Delete();
+            delete.delCtr(selectedId);
+            cmgr.ShowData(dataGridView1);
         }
     }
 }

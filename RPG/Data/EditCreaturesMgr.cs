@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace RPG.Data
 {
     internal class EditCreaturesMgr
     {
-        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\kasia\source\repos\RPG\RPG\Database.mdf;Integrated Security=True");
+        SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..")) + "\\Database.mdf" + "; Integrated Security=True");
         Creature selectedCreature;
 
 
@@ -51,32 +52,24 @@ namespace RPG.Data
             dt.Columns.Add("Name");
             dt.Columns.Add("UserId");
             dt.Columns.Add("Mana");
-            if (RegLogMgr.currentUser.getRoleId() == 3)
+            string querry = "SELECT * FROM Creatures WHERE UserId = @Id";
+            conn.Open();
+            using (var command = new SqlCommand(querry, conn))
             {
-                string querry = "SELECT * FROM Creatures WHERE UserId = @Id";
-                conn.Open();
-                using(var command = new SqlCommand(querry, conn))
+                command.Parameters.AddWithValue("@Id", RegLogMgr.currentUser.getId());
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
                 {
-                    command.Parameters.AddWithValue("@Id", RegLogMgr.currentUser.getId());
-                    var reader = command.ExecuteReader();
-                    if (reader.HasRows)
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            dt.Rows.Add(reader.GetInt32(0),reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6));
-                        }
+                        dt.Rows.Add(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6));
                     }
-
-                    reader.Close();
-                    conn.Close();
                 }
-                data.DataSource = dt;
 
+                reader.Close();
+                conn.Close();
             }
-            else
-            {
-
-            }
+            data.DataSource = dt;
         }
 
         public void showSpecData(int selectedId, DataGridView view)
@@ -202,7 +195,7 @@ namespace RPG.Data
 
         }
 
-        public void fillClassComboBox(ComboBox box)
+        public void fillClassComboBox(ComboBox box, ComboBox box1, ComboBox box2)
         {
             conn.Open();
             string arcc = "SELECT Class FROM Creatures";
@@ -231,7 +224,62 @@ namespace RPG.Data
             {
                 box.Items.Add(f);
             }
-            
+
+            conn.Open();
+            string arcarc = "SELECT Archclass FROM Creatures";
+
+            List<string> alist = new List<string>();
+
+            using (var command = new SqlCommand(arcarc, conn))
+            {
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        alist.Add(reader.GetString(0));
+                    }
+                }
+
+                reader.Close();
+                conn.Close();
+            }
+
+
+
+            alist = alist.Distinct().ToList();
+            foreach (string f in alist)
+            {
+                box1.Items.Add(f);
+            }
+
+            conn.Open();
+            string race = "SELECT Race FROM Creatures";
+
+            List<string> rlist = new List<string>();
+
+            using (var command = new SqlCommand(race, conn))
+            {
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        rlist.Add(reader.GetString(0));
+                    }
+                }
+
+                reader.Close();
+                conn.Close();
+            }
+
+
+
+            rlist = rlist.Distinct().ToList();
+            foreach (string f in rlist)
+            {
+                box2.Items.Add(f);
+            }
         }
 
         public void saveData(string Name, string value, DataGridView view)

@@ -33,6 +33,8 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.EU_MainM = new System.Windows.Forms.Button();
             this.ES_MainM = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.Add_Crt_btn_MM = new System.Windows.Forms.Button();
             this.Login_btn = new System.Windows.Forms.Button();
@@ -40,8 +42,6 @@
             this.Register_btn = new System.Windows.Forms.Button();
             this.See_Main = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -128,6 +128,29 @@
             this.ES_MainM.Text = "Edit creatures";
             this.ES_MainM.UseVisualStyleBackColor = true;
             this.ES_MainM.Click += new System.EventHandler(this.ES_MainM_Click);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.Location = new System.Drawing.Point(200, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(190, 50);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "How many creatures show?";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.textBox1.Location = new System.Drawing.Point(442, 36);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 30);
+            this.textBox1.TabIndex = 3;
+            this.textBox1.Text = "5";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // tableLayoutPanel4
             // 
@@ -218,6 +241,8 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
@@ -227,29 +252,6 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(794, 219);
             this.dataGridView1.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(200, 26);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(190, 50);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "How many creatures show?";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBox1.Location = new System.Drawing.Point(442, 36);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 30);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.Text = "5";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // MainMenu
             // 

@@ -85,6 +85,7 @@
       <DependentUpon>DatabaseDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Data\AddMgrcs.cs" />
+    <Compile Include="Data\Delete.cs" />
     <Compile Include="Data\EditCreaturesMgr.cs" />
     <Compile Include="Data\EditUsersMgr.cs" />
     <Compile Include="Data\EncryptDecrypt.cs" />
